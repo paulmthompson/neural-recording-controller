@@ -25,7 +25,9 @@ further adapted by me
 Open Ephys versions can be found here:
 https://github.com/open-ephys-plugins/rhythm-plugins
 */
-
+#if defined(_WIN32)
+    #define NOMINMAX
+#endif
 
 #include <iostream>
 #include <iomanip>
@@ -1417,7 +1419,7 @@ void EvalBoard::flush()
         //  std::cout << "Flush phase A: " << numWordsInFifo() << std::endl;
         }
         while (this->numWordsInFifo() > 0) {
-            dev->ReadFromBlockPipeOut(PipeOutData, USB3_BLOCK_SIZE, USB3_BLOCK_SIZE *std::max(2 * numWordsInFifo() / USB3_BLOCK_SIZE, (unsigned int)1), usbBuffer);
+            dev->ReadFromBlockPipeOut(PipeOutData, USB3_BLOCK_SIZE, USB3_BLOCK_SIZE * std::max(static_cast<int>(2 * numWordsInFifo() / USB3_BLOCK_SIZE), static_cast<int>(1)), usbBuffer);
         //  std::cout << "Flush phase B: " << numWordsInFifo() << std::endl;
         //  printFIFOmetrics();
         }
