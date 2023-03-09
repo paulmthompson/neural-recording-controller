@@ -120,12 +120,12 @@ public:
         PortC,
         PortD
     };
-    /*
-    void uploadCommandList(const vector<int> &commandList, AuxCmdSlot auxCommandSlot, int bank);
-    void printCommandList(const vector<int> &commandList) const;
+    
+    void uploadCommandList(const std::vector<int> &commandList, AuxCmdSlot auxCommandSlot, int bank);
+    void printCommandList(const std::vector<int> &commandList) const;
     void selectAuxCommandBank(BoardPort port, AuxCmdSlot auxCommandSlot, int bank);
     void selectAuxCommandLength(AuxCmdSlot auxCommandSlot, int loopIndex, int endIndex);
-
+    
     void resetBoard();
     void setContinuousRunMode(bool continuousMode);
     void setMaxTimeStep(unsigned int maxTimeStep);
@@ -133,13 +133,13 @@ public:
     bool isRunning() const;
     unsigned int numWordsInFifo() const;
     static unsigned int fifoCapacityInWords();
-
+    
     void setCableDelay(BoardPort port, int delay);
     void setCableLengthMeters(BoardPort port, double lengthInMeters);
     void setCableLengthFeet(BoardPort port, double lengthInFeet);
     double estimateCableLengthMeters(int delay) const;
     double estimateCableLengthFeet(int delay) const;
-
+    
     void setDspSettle(bool enabled);
 
     enum BoardDataSource {
@@ -160,19 +160,19 @@ public:
         PortD1Ddr = 14,
         PortD2Ddr = 15
     };
-
+    
     void setDataSource(int stream, BoardDataSource dataSource);
     void enableDataStream(int stream, bool enabled);
     int getNumEnabledDataStreams() const;
-
+    
     void clearTtlOut();
     void setTtlOut(int ttlOutArray[]);
     void getTtlIn(int ttlInArray[]);
-
+    
     void setDacManual(int value);
 
     void setLedDisplay(int ledArray[]);
-
+    
     void enableDac(int dacChannel, bool enabled);
     void setDacGain(int gain);
     void setAudioNoiseSuppress(int noiseSuppress);
@@ -186,15 +186,15 @@ public:
     void setDacHighpassFilter(double cutoff);
     void setDacThreshold(int dacChannel, int threshold, bool trigPolarity);
     void setTtlMode(int mode);
-
+    
     void flush();
-    bool readDataBlock(Rhd2000DataBlock *dataBlock, int nSamples = -1);
-    bool readDataBlocks(int numBlocks, queue<Rhd2000DataBlock> &dataQueue);
-    int queueToFile(queue<Rhd2000DataBlock> &dataQueue, std::ofstream &saveOut);
+    //bool readDataBlock(Rhd2000DataBlock *dataBlock, int nSamples = -1);
+    //bool readDataBlocks(int numBlocks, queue<Rhd2000DataBlock> &dataQueue);
+    //int queueToFile(queue<Rhd2000DataBlock> &dataQueue, std::ofstream &saveOut);
     int getBoardMode() const;
     int getCableDelay(BoardPort port) const;
-    void getCableDelay(vector<int> &delays) const;
-
+    void getCableDelay(std::vector<int> &delays) const;
+    
     //Additions by open-ephys
     void resetFpga();
     bool isStreamEnabled(int streamIndex);
@@ -202,12 +202,10 @@ public:
     void setClockDivider(int divide_factor);
     bool isUSB3();
     void printFIFOmetrics();
-    bool readRawDataBlock(unsigned char** bufferPtr, int nSamples = -1);
+    //bool readRawDataBlock(unsigned char** bufferPtr, int nSamples = -1);
     void manualTrigger(int trigger, int triggerOn);
     void programStimReg(int stream, int channel, int reg, int value);
     void updateDigitalOutput(DigitalOutput digital);
-
-    */
 
 private:
     OpalKellyLegacy::okCFrontPanel *dev;
