@@ -18,6 +18,14 @@
 // See http://www.intantech.com for documentation and product information.
 //----------------------------------------------------------------------------------
 
+/*
+This file was originally made by Intan Technologies, converted to modern C++ in the Open Ephys repository, and then
+further adapted by me
+
+Open Ephys versions can be found here:
+https://github.com/open-ephys-plugins/rhythm-plugins
+*/
+
 #ifndef RHD2000EVALBOARD_H
 #define RHD2000EVALBOARD_H
 
@@ -35,13 +43,13 @@
 
 #include <queue>
 
-using namespace std;
-/*
 namespace OpalKellyLegacy
 {
     class okCFrontPanel;
 }
-class Rhd2000DataBlock;
+
+
+//class Rhd2000DataBlock;
 
 struct DigitalOutput {
     int channel;
@@ -64,16 +72,17 @@ struct DigitalOutput {
     bool repeatBurst;
 };
 
-class Rhd2000EvalBoard
+
+class EvalBoard
 {
 
 public:
-    Rhd2000EvalBoard();
-    ~Rhd2000EvalBoard();
+    EvalBoard();
+    ~EvalBoard();
 
     int open(const char* libname); //patched to allow selecting path to dll
-    bool uploadFpgaBitfile(string filename);
-    void initialize();
+    bool uploadFpgaBitfile(std::string filename);
+    //void initialize();
 
     enum AmplifierSampleRate {
         SampleRate1000Hz,
@@ -94,7 +103,7 @@ public:
         SampleRate25000Hz,
         SampleRate30000Hz
     };
-
+    
     bool setSampleRate(AmplifierSampleRate newSampleRate);
     double getSampleRate() const;
     AmplifierSampleRate getSampleRateEnum() const;
@@ -111,7 +120,7 @@ public:
         PortC,
         PortD
     };
-
+    /*
     void uploadCommandList(const vector<int> &commandList, AuxCmdSlot auxCommandSlot, int bank);
     void printCommandList(const vector<int> &commandList) const;
     void selectAuxCommandBank(BoardPort port, AuxCmdSlot auxCommandSlot, int bank);
@@ -198,12 +207,14 @@ public:
     void programStimReg(int stream, int channel, int reg, int value);
     void updateDigitalOutput(DigitalOutput digital);
 
+    */
+
 private:
     OpalKellyLegacy::okCFrontPanel *dev;
     AmplifierSampleRate sampleRate;
     int numDataStreams; // total number of data streams currently enabled
     int dataStreamEnabled[MAX_NUM_DATA_STREAMS_USB3]; // 0 (disabled) or 1 (enabled), set for maximum stream number
-    vector<int> cableDelay;
+    std::vector<int> cableDelay;
 
     // Buffer for reading bytes from USB interface
     unsigned char usbBuffer[USB_BUFFER_SIZE];
@@ -267,7 +278,7 @@ private:
         PipeOutData = 0xa0
     };
 
-    string opalKellyModelName(int model) const;
+    std::string opalKellyModelName(int model) const;
     double getSystemClockFreq() const;
 
     bool isDcmProgDone() const;
@@ -275,5 +286,5 @@ private:
 
     bool usb3; //Open-Ephys addition for USB3 support
 };
-*/
+
 #endif // RHD2000EVALBOARD_H
