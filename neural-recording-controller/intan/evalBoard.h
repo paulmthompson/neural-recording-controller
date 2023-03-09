@@ -82,7 +82,7 @@ public:
 
     int open(const char* libname); //patched to allow selecting path to dll
     bool uploadFpgaBitfile(std::string filename);
-    //void initialize();
+    void initialize();
 
     enum AmplifierSampleRate {
         SampleRate1000Hz,

@@ -59,7 +59,7 @@ EvalBoard::EvalBoard()
         dataStreamEnabled[i] = 0;
     }
 
-    //cableDelay.resize(4, -1);
+    cableDelay.resize(4, -1);
 }
 
 //Destructor: Deletes the device to avoid memory leak in Open ephys
@@ -205,9 +205,9 @@ double EvalBoard::getSystemClockFreq() const
 
     return pll.GetOutputFrequency(0);
 }
-/*
+
 // Initialize Rhythm FPGA to default starting values.
-void Rhd2000EvalBoard::initialize()
+void EvalBoard::initialize()
 {
     int i;
 
@@ -321,7 +321,6 @@ void Rhd2000EvalBoard::initialize()
 
     enableBoardLeds(true);
 }
-*/
 
 // Set the per-channel sampling rate of the RHD2000 chips connected to the FPGA.
 bool EvalBoard::setSampleRate(AmplifierSampleRate newSampleRate)
