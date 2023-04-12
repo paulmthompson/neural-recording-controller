@@ -42,6 +42,7 @@ https://github.com/open-ephys-plugins/rhythm-plugins
 #define DDR_BLOCK_SIZE 32
 
 #include <queue>
+#include <string>
 
 namespace OpalKellyLegacy
 {
