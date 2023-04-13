@@ -10,11 +10,17 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ {"os": ubuntu-latest, short: linux},{"os": windows-latest, short: windows}]
-        compiler: [gcc,clang]
+        - {"os": ubuntu-latest, short: linux, compiler: gcc, shell: bash}
+        - {"os": ubuntu-latest, short: linux, compiler: clang, shell: bash}
+        - {"os": windows-latest, short: windows, compiler: gcc, shell: msys2}
+        - {"os": windows-latest, short: windows, compiler: clang, shell: msys2}
 
-    runs-on: ${{matrix.os.os}}
+    runs-on: ${{matrix.os}}
 
+    defaults:
+      run:
+        shell: '${{ matrix.shell }} {0}'
+  
     steps:
     - uses: actions/checkout@v3
 
@@ -27,13 +33,14 @@ jobs:
           base-devel
           mingw-w64-x86_64-clang
           mingw-w64-x86_64-gcc
+      run:
     
     - name: Configure CMake
-      run: cmake --preset ${{matrix.os.short}}-${{matrix.compiler}}-release
+      run: cmake --preset ${{matrix.short}}-${{matrix.compiler}}-release
 
     - name: Build
-      run: cmake --build --preset ${{matrix.os.short}}-${{matrix.compiler}}-release
+      run: cmake --build --preset ${{matrix.short}}-${{matrix.compiler}}-release
     
     - name: Test
-      run: ctest --preset ${{matrix.os.short}}-${{matrix.compiler}}-release
+      run: ctest --preset ${{matrix.short}}-${{matrix.compiler}}-release
 
