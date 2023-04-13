@@ -10,10 +10,11 @@ jobs:
   build:
     strategy:
       matrix:
-        - {"os": ubuntu-latest, short: linux, compiler: gcc, shell: bash}
-        - {"os": ubuntu-latest, short: linux, compiler: clang, shell: bash}
-        - {"os": windows-latest, short: windows, compiler: gcc, shell: msys2}
-        - {"os": windows-latest, short: windows, compiler: clang, shell: msys2}
+        include:
+          - {"os": ubuntu-latest, short: linux, compiler: gcc, shell: bash}
+          - {"os": ubuntu-latest, short: linux, compiler: clang, shell: bash}
+          - {"os": windows-latest, short: windows, compiler: gcc, shell: msys2}
+          - {"os": windows-latest, short: windows, compiler: clang, shell: msys2}
 
     runs-on: ${{matrix.os}}
 
