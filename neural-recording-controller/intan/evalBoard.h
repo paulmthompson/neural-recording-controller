@@ -44,6 +44,12 @@ https://github.com/open-ephys-plugins/rhythm-plugins
 #include <queue>
 #include <string>
 
+#if defined _WIN32 || defined __CYGWIN__
+	#define DLLOPT __declspec(dllexport)
+#else
+	#define DLLOPT __attribute__((visibility("default")))
+#endif
+
 namespace OpalKellyLegacy
 {
     class okCFrontPanel;
@@ -74,7 +80,7 @@ struct DigitalOutput {
 };
 
 
-class EvalBoard
+class DLLOPT EvalBoard
 {
 
 public:
