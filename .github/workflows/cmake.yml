@@ -45,4 +45,5 @@ jobs:
     
     - name: Test
       run: ctest --preset ${{matrix.short}}-${{matrix.compiler}}-release
+      working-directory: ${{ github.workspace }}
 
