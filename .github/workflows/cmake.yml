@@ -21,6 +21,12 @@ jobs:
     - name: Add clang and and gcc to windows runner
       uses: msys2/setup-msys2@v2
       if: runner.os == 'Windows'
+      with:
+        update: true
+        install: >-
+          base-devel
+          mingw-w64-x86_64-clang
+          mingw-w64-x86_64-gcc
     
     - name: Configure CMake
       run: cmake --preset ${{matrix.os.short}}-${{matrix.compiler}}-release
