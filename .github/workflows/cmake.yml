@@ -18,6 +18,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Add clang and mingW path to windows runner
+      shell: bash
+      if: runner.os == 'Windows'
+      run: echo "PATH=$PATH:C:\msys64\mingw64\bin" >> $GITHUB_ENV
+    
+
     - name: Configure CMake
       run: cmake --preset ${{matrix.os.short}}-${{matrix.compiler}}-release
 
