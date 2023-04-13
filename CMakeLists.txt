@@ -34,5 +34,6 @@ add_subdirectory(neural-recording-controller)
 include(CTest)
 
 if (BUILD_TESTING)
+  enable_testing()
   add_subdirectory(tests)
 endif()
