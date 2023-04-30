@@ -27,23 +27,20 @@ set(TEST_HARDWARE_INTAN FALSE)
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 include(Catch)
 
-add_test(NAME first_test COMMAND neural_recording_test_suite "[evalBoard]")
-
-
-
 #This was in Testing section of Craig Scott's Professional CMake book
 #https://stackoverflow.com/questions/59376924/ctest-cmake-mingw-executables-build-but-fail-to-run-because-fresh-dll-is-n
-if (WIN32)
-    set(FrontPanelDir "${PROJECT_SOURCE_DIR}/neural-recording-controller/intan/Resources/FrontPanel")
-    set(neuralRecordingDir "$<SHELL_PATH:$<TARGET_FILE_DIR:neural-recording-controller>>")
-    set_property(TEST first_test APPEND PROPERTY ENVIRONMENT_MODIFICATION
-    PATH=path_list_prepend:${FrontPanelDir}
-    PATH=path_list_prepend:${neuralRecordingDir}
-    )
-    #catch_discover_tests(neural_recording_test_suite PROPERTIES APPEND PROPERTY ENVIRONMENT_MODIFICATION
-    #PATH=path_list_prepend:${FrontPanelDir}
-    #PATH=path_list_prepend:${neuralRecordingDir}
-    #)
-endif()
+function(add_test_with_dll test_name test_cmd)
 
-#catch_discover_tests(neural_recording_test_suite PROPERTIES ENVIRONMENT "${FrontPanelDir};${neuralRecordingDir}")
+    add_test(NAME ${test_name} COMMAND neural_recording_test_suite ${test_cmd})
+    if (WIN32)
+        set(FrontPanelDir "${PROJECT_SOURCE_DIR}/neural-recording-controller/intan/Resources/FrontPanel")
+        set(neuralRecordingDir "$<SHELL_PATH:$<TARGET_FILE_DIR:neural-recording-controller>>")
+        set_property(TEST ${test_name} APPEND PROPERTY ENVIRONMENT_MODIFICATION
+        PATH=path_list_prepend:${FrontPanelDir}
+        PATH=path_list_prepend:${neuralRecordingDir}
+        )
+    endif()
+endfunction()
+
+add_test_with_dll(first_test "[evalBoard]")
+
