@@ -190,7 +190,7 @@ public:
     void enableExternalDigOut(BoardPort port, bool enable);
     void setExternalDigOutChannel(BoardPort port, int channel);
     void enableDacHighpassFilter(bool enable);
-    void setDacHighpassFilter(double cutoff);
+    void setDacHighpassFilter(double cutoffHz);
     void setDacThreshold(int dacChannel, int threshold, bool trigPolarity);
     void setTtlMode(int mode);
     

@@ -836,7 +836,7 @@ void EvalBoard::setCableLengthMeters(BoardPort port, double lengthInMeters)
     distance = 2.0 * lengthInMeters;      // round trip distance data must travel on cable
     timeDelay = (distance / cableVelocity) + xilinxLvdsOutputDelay + rhd2000Delay + xilinxLvdsInputDelay + misoSettleTime;
 
-    delay = (int) floor(((timeDelay / tStep) + 1.0) + 0.5);
+    delay = static_cast<int>(floor(((timeDelay / tStep) + 1.0) + 0.5));
 
     if (delay < 1) delay = 1;   // delay of zero is too short (due to I/O delays), even for zero-length cables
 
@@ -865,7 +865,7 @@ double EvalBoard::estimateCableLengthMeters(int delay) const
     cableVelocity = 0.555 * speedOfLight;  // propogation velocity on cable: version 1.4 improvement based on cable measurements
 
     // distance = cableVelocity * (delay * tStep - (xilinxLvdsOutputDelay + rhd2000Delay + xilinxLvdsInputDelay));  // version 1.3 and earlier
-    distance = cableVelocity * ((((double) delay) - 1.0) * tStep - (xilinxLvdsOutputDelay + rhd2000Delay + xilinxLvdsInputDelay + misoSettleTime));  // version 1.4 improvement
+    distance = cableVelocity * (((static_cast<double>(delay)) - 1.0) * tStep - (xilinxLvdsOutputDelay + rhd2000Delay + xilinxLvdsInputDelay + misoSettleTime));  // version 1.4 improvement
     if (distance < 0.0) distance = 0.0;
 
     return (distance / 2.0);
@@ -1314,7 +1314,7 @@ void EvalBoard::enableDacHighpassFilter(bool enable)
 // to record wideband neural data while viewing only spikes without LFPs on the DAC outputs,
 // for example.  This is useful when using the low-latency FPGA thresholds to detect spikes
 // and produce digital pulses on the TTL outputs, for example.
-void EvalBoard::setDacHighpassFilter(double cutoff)
+void EvalBoard::setDacHighpassFilter(double cutoffHz)
 {
     double b;
     int filterCoefficient;
@@ -1322,10 +1322,10 @@ void EvalBoard::setDacHighpassFilter(double cutoff)
 
     // Note that the filter coefficient is a function of the amplifier sample rate, so this
     // function should be called after the sample rate is changed.
-    b = 1.0 - exp(-2.0 * pi * cutoff / getSampleRate());
+    b = 1.0 - exp(-2.0 * pi * cutoffHz / getSampleRate());
 
     // In hardware, the filter coefficient is represented as a 16-bit number.
-    filterCoefficient = (int) floor(65536.0 * b + 0.5);
+    filterCoefficient =  static_cast<int>(floor(65536.0 * b + 0.5));
 
     if (filterCoefficient < 1) {
         filterCoefficient = 1;
