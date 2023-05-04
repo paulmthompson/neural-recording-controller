@@ -43,6 +43,8 @@ https://github.com/open-ephys-plugins/rhythm-plugins
 
 #include <queue>
 #include <string>
+#include <vector>
+
 
 #if defined _WIN32 || defined __CYGWIN__
 	#define DLLOPT __declspec(dllexport)
@@ -78,7 +80,6 @@ struct DigitalOutput {
 
     bool repeatBurst;
 };
-
 
 class DLLOPT EvalBoard
 {
