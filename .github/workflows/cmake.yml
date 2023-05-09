@@ -25,7 +25,11 @@ jobs:
   
     steps:
     - uses: actions/checkout@v3
+
     - uses: seanmiddleditch/gha-setup-ninja@master
+
+    - uses: ilammy/msvc-dev-cmd@v1
+      if: runner.os == 'Windows' && matrix.compiler == 'msvc'
 
     - name: Add clang and and gcc to windows runner
       uses: msys2/setup-msys2@v2
