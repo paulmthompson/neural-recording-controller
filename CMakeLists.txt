@@ -27,15 +27,14 @@ set(CMAKE_INSTALL_RPATH ${base} ${base}/${relDir})
 
 #set(VCPKG_MANIFEST_MODE ON)
 
+#Setup Testing
+include(CTest)
 
 if (BUILD_TESTING)
   enable_testing()
 endif()
 
 add_subdirectory(neural-recording-controller)
-
-#Setup Testing
-include(CTest)
 
 if (BUILD_TESTING)
   add_subdirectory(tests)
