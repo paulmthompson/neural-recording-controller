@@ -17,7 +17,8 @@
         "toolset": {
           "value": "host=x64",
           "strategy": "external"
-        }
+        },
+        "generator": "Ninja"
       },
       {
         "name": "windows-base",
