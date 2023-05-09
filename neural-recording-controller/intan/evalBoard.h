@@ -92,6 +92,7 @@ public:
     bool uploadFpgaBitfile(std::string filename);
     void initialize();
 
+    //Sample rate settings and clock programming
     enum AmplifierSampleRate {
         SampleRate1000Hz,
         SampleRate1250Hz,
@@ -142,12 +143,6 @@ public:
     unsigned int numWordsInFifo() const;
     static unsigned int fifoCapacityInWords();
     
-    void setCableDelay(BoardPort port, int delay);
-    void setCableLengthMeters(BoardPort port, double lengthInMeters);
-    void setCableLengthFeet(BoardPort port, double lengthInFeet);
-    double estimateCableLengthMeters(int delay) const;
-    double estimateCableLengthFeet(int delay) const;
-    
     void setDspSettle(bool enabled);
 
     enum BoardDataSource {
@@ -173,35 +168,49 @@ public:
     void enableDataStream(int stream, bool enabled);
     int getNumEnabledDataStreams() const;
     
-    void clearTtlOut();
-    void setTtlOut(int ttlOutArray[]);
     void getTtlIn(int ttlInArray[]);
     
-    void setDacManual(int value);
 
-    void setLedDisplay(int ledArray[]);
-    
+    // DAC Output
+    void setDacManual(int value); // DAC Manual constant output
     void enableDac(int dacChannel, bool enabled);
     void setDacGain(int gain);
     void setAudioNoiseSuppress(int noiseSuppress);
     void selectDacDataStream(int dacChannel, int stream);
     void selectDacDataChannel(int dacChannel, int dataChannel);
-    void enableExternalFastSettle(bool enable);
-    void setExternalFastSettleChannel(int channel);
-    void enableExternalDigOut(BoardPort port, bool enable);
-    void setExternalDigOutChannel(BoardPort port, int channel);
     void enableDacHighpassFilter(bool enable);
     void setDacHighpassFilter(double cutoffHz);
     void setDacThreshold(int dacChannel, int threshold, bool trigPolarity);
-    void setTtlMode(int mode);
+
+    void setLedDisplay(int ledArray[]);
+    
+    //Amplifier fast settle (blanking) functions
+    void enableExternalFastSettle(bool enable); // TTL input triggering fast settle on amplifiers
+    void setExternalFastSettleChannel(int channel);
+
+    //Digital output on amplifier headstages
+    void enableExternalDigOut(BoardPort port, bool enable);
+    void setExternalDigOutChannel(BoardPort port, int channel);
+
+    //TTL output
+    void setTtlMode(int mode); 
+    void clearTtlOut();
+    void setTtlOut(int ttlOutArray[]);
     
     void flush();
     //bool readDataBlock(Rhd2000DataBlock *dataBlock, int nSamples = -1);
     //bool readDataBlocks(int numBlocks, queue<Rhd2000DataBlock> &dataQueue);
     //int queueToFile(queue<Rhd2000DataBlock> &dataQueue, std::ofstream &saveOut);
     int getBoardMode() const;
+
+    //Cable delay functions for SPI interface with intan headstages
     int getCableDelay(BoardPort port) const;
     void getCableDelay(std::vector<int> &delays) const;
+    void setCableDelay(BoardPort port, int delay);
+    void setCableLengthMeters(BoardPort port, double lengthInMeters);
+    void setCableLengthFeet(BoardPort port, double lengthInFeet);
+    double estimateCableLengthMeters(int delay) const;
+    double estimateCableLengthFeet(int delay) const;
     
     //Additions by open-ephys
     void resetFpga();
@@ -211,6 +220,7 @@ public:
     bool isUSB3();
     void printFIFOmetrics();
     //bool readRawDataBlock(unsigned char** bufferPtr, int nSamples = -1);
+
     void manualTrigger(int trigger, int triggerOn);
     void programStimReg(int stream, int channel, int reg, int value);
     void updateDigitalOutput(DigitalOutput digital);
@@ -287,6 +297,7 @@ private:
     std::string opalKellyModelName(int model) const;
     double getSystemClockFreq() const;
 
+    //Sample rate settings and clock programming
     bool isDcmProgDone() const;
     bool isDataClockLocked() const;
 
